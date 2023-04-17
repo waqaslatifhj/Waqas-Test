@@ -29,7 +29,7 @@
 
 8=> Checkout into your branch by typing `git checkout [Your branch name]`
 
-9=> Add a remote origin to c2-theme repo by typing `git remote add c2 https://github.com/C2Digital1/c2theme.git`
+9=> Add a remote origin to c2-theme repo by typing `git remote add c2 https://github.com/C2Digital1/c2-theme.git`
 
 10=> Add `git checkout [Your branch name]` to make sure you are in right branch for future changes.
 
