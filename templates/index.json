@@ -1,39 +1,5 @@
 {
   "sections": {
-    "d1a7308c-53fa-4f19-99bc-943f2997dc11": {
-      "type": "index__newsletter",
-      "settings": {
-        "display_first_name": true,
-        "display_last_name": true,
-        "heading": "Subscribe",
-        "subheading": "<p>Sign up to get the latest on sales, new releases and more …<\/p>",
-        "heading_preset": "is-h5",
-        "subheading_preset": "is-text",
-        "heading_color": "#000000",
-        "subheading_color": "#000000",
-        "image_darken": false,
-        "image_cropping": "center",
-        "image_position": "left",
-        "alignment": "center",
-        "width": "wide",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_left": 0,
-        "padding_right": 0,
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "padding_top_m": 0,
-        "padding_bottom_m": 0,
-        "padding_left_m": 0,
-        "padding_right_m": 0,
-        "margin_top_m": 0,
-        "margin_bottom_m": 0,
-        "section_bg": "linear-gradient(#ffffff, #ffffff)",
-        "animation": "none",
-        "css_class": "",
-        "custom_css": ""
-      }
-    },
     "d4ed15d0-fd70-400b-bf63-41b28a7df33a": {
       "type": "index__blog-posts",
       "settings": {
