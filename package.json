@@ -5,13 +5,10 @@
     "generate": "npx c2 generate",
     "shopify": "shopify",
     "dev": "shopify theme dev",
-    "list": "shopify theme list",
-    "private": "dotenv -- npm install "
+    "list": "shopify theme list"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "dotenv-cli": "^7.2.1"
-  }
+  "dependencies": {}
 }
