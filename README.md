@@ -56,7 +56,7 @@
 `git push c2 [Your branch name]` Push this new commit to Github repo.
 
 
-2=> Step 1 will update your branch with latest code, All that is left is to create a Pull Request to Main branch by going to https://github.com/C2Digital1/c2-theme and opening your branch and clicking `Contibute>Open Pull Request` on top right corner of code tab. This can also be done with git commands.
+2=> Step 1 will update your branch with latest code, All that is left is to create a Pull Request to Main branch by going to https://github.com/C2Digital1/c2-theme and opening your branch and clicking `Contribute > Open Pull Request` on top right corner of code tab. This can also be done with git commands.
 
 
 ## Keep your local theme up-to-date with Main branch for future changes
