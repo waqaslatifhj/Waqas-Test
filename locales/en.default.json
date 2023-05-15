@@ -238,7 +238,20 @@
     "general": {
       "previous_product_html": "Previous",
       "next_product_html": "Next",
-      "from": "from"
+      "from": "from",
+      "recipient": {
+        "form": {
+          "checkbox": "I want to send this as a gift",
+          "email_label": "Recipient email",
+          "email_label_optional": "Recipient email",
+          "email": "Email",
+          "name_label": "Recipient name (optional)",
+          "name": "Recipient Name",
+          "message_label": "Message (optional)",
+          "message": "Message",
+          "max_characters": "{{ max_chars }} characters max"
+        }
+      }
     },
     "product": {
       "select_variant": "Please select all your options",
