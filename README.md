@@ -39,7 +39,7 @@
 
 1): In your project directory open CMD/Terminal and type command `npm install` to install dependencies 
 
-2): Run `shopify theme dev --store="Store myshopify.com line here"` in CMD/Terminal to create a new preview theme and preview it locally
+2): Run `shopify theme dev --store="Store myshopify.com link here"` in CMD/Terminal to create a new preview theme and preview it locally
 
 **NOTE** The store flag here is needed for first time so shopify CLI knows where store to work with. You can check store name with `shopify theme info` command. After setting up a new project this command can also be used as `shopify theme dev`(without store flag) or `npm run dev`. The second one is defined under scripts in package.json file and more commands can be added here as well including commands to install private packages(libraries) to run them directly with  npm run prefix in terminal. Visit this [guide](https://github.com/C2Digital1/c2-theme/blob/main/Shopify-CLI.md) for more info on package.json scripts and how to use them for private packages.
 
@@ -49,7 +49,8 @@
 
 `git checkout [Your branch name]` to make sure you are in right branch
 
-`git add .` Stage All changes
+`git add <file-name> <file-name>` to stage the files that were changed e.g if `index__product.liquid` was changed you can write `git add sections/index__product.liquid`
+(NOTE: Use `git status` to see the files that were changes)
 
 `git commit -m "Commit Name here(can be feature name)"` Add a commit 
 
