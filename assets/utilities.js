@@ -323,7 +323,9 @@ Shopify.theme.infiniteScroll = {
       e.stopPropagation();
       return false;
     });
-
+    this.update()
+  },
+  update:function(){
     if ($('[data-load-infinite-scroll]').length) {
       Shopify.theme.infiniteScroll.enableInfinite();
     }
