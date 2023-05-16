@@ -1935,7 +1935,36 @@
   Shopify.theme.jsProductClass = Product;
   Shopify.theme.jsProduct = {
     init($section) {
+      Shopify.theme.jsProduct = $.extend(this, Shopify.theme.getSectionData($section));
+      this.initGiftCard($section);
       return new Product($section);
+    },
+    initGiftCard($section){
+      if(this.gift_card_recipient_feature_active){
+        
+        $section.on("change","input[data-recipient-form-trigger]",function(){
+          const formContainer = $section.find(".purchase-details__recipient-form__blocks").first();
+          if($(this).is(':checked')){
+           Shopify.theme.jsProduct.initFormFields(formContainer);
+           formContainer.slideDown();
+          }else {
+            formContainer.slideUp();
+            Shopify.theme.jsProduct.resetFormFields(formContainer);
+          }
+        });
+      }
+      
+    },
+    resetFormFields($form){
+      $form.find(".purchase-details__recipient-form__input").each(function(){
+        $(this).attr("name","").val('');
+      });
+    },
+    initFormFields($form){
+      $form.find(".purchase-details__recipient-form__input").each(function(){
+        $(this).attr("name",$(this).attr("data-name"));
+        ($(this).hasClass("purchase-details__recipient-form__radio-field") && $(this).val() != 'on') ? $(this).val('on') : null;
+      });
     },
     relatedProducts($section) {
 

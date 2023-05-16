@@ -77,9 +77,12 @@
               {% if item.properties %}
                 {% for p in item.properties %}
                   {% if p.last != blank %}
-                    <div class="ajax-cart__line-item">
-                      {{ p.first }}: {{ p.last }}
-                    </div>
+                    {% assign property_starts = p.first | slice : 0 %}
+                    {% unless property_starts == '_'  %}
+                      <div class="ajax-cart__line-item">
+                        {{ p.first }}: {{ p.last }}
+                      </div>
+                    {% endunless %}
                   {% endif %}
                 {% endfor %}
               {% endif %}

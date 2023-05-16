@@ -6,7 +6,20 @@
 {%- liquid
   assign id = section.id
   assign set_smaller_side_sticky = section.settings.set_smaller_side_sticky
+  assign gift_card_recipient_feature_active = false
 -%}
+{% comment  %}
+   Getting and setting the value to activate gift card recipient form fields
+   From Product Form Block
+{% endcomment %}
+{% for block in section.blocks %}
+  {%  if block.type == 'form' %}
+    {%  if block.settings.enable_giftCard_recipient and product.gift_card? %}
+      {% assign gift_card_recipient_feature_active = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
 {% comment %}Spacing{% endcomment %}
 {%- liquid
   assign padding_top = section.settings.padding_top
@@ -129,6 +142,7 @@
       tag_style: settings.tag_style,
       thumbnail_position: section.settings.thumbnail_position,
       video_looping: section.settings.video_looping,
+      gift_card_recipient_feature_active:gift_card_recipient_feature_active
     %}
   </div>
 </section>
@@ -157,7 +171,8 @@
     "thumbnails_enabled": {{ section.settings.display_thumbnails | json }},
     "thumbnail_position": {{ section.settings.thumbnail_position | json }},
     "product_media_amount": {{ product.media.size }},
-    "template": "classic"
+    "template": "classic",
+    "gift_card_recipient_feature_active": {{ gift_card_recipient_feature_active | json }}
   }
 </script>
 
@@ -794,6 +809,13 @@
           "label": "Show dynamic checkout button",
           "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
           "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_giftCard_recipient",
+          "label": "Show recipient information form for gift card products",
+          "info": "Gift card products can optionally be sent direct to a recipient along with a personal message.[Learn more](https://help.shopify.com/en/manual/online-store/themes/customizing-themes/add-gift-card-recipient-fields)",
+          "default": false
         },
         {
           "type": "paragraph",
