@@ -195,7 +195,7 @@ Shopify.theme.jsCollection = {
 
       // Initiate infinite scrolling on new products appended to collection grid
       if ($('[data-custom-pagination]').length) {
-        Shopify.theme.infiniteScroll.init();
+        Shopify.theme.infiniteScroll.update();
       }
 
     });
