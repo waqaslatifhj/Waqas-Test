@@ -260,10 +260,10 @@ Shopify.theme.jsAjaxCart = {
         },
         error: function (XMLHttpRequest) {
           let response = eval('(' + XMLHttpRequest.responseText + ')');
-          response = response.description;
-
+          response = (response.message) ? response.message : response.description;
+          
           const cartWarning = `<p class="cart-warning__message animated bounceIn">${response.replace('All 1 ', 'All ')}</p>`;
-
+          
           $('.warning').remove();
 
           $addToCartForm

@@ -219,7 +219,7 @@
         {% endif %}
         {% comment %} Render Gift Card Form  {% endcomment %}
         {%  if gift_card_recipient_feature_active %}
-          {%  render 'gift_card_recipient', 
+          {%  render 'purchase-details__recipient-form', 
             form: form, 
             product: product, 
             section: section 
@@ -230,7 +230,7 @@
           {% if settings.cart_action == 'reload_page' %}
             <input type="hidden" name="return_to" value="back" />
           {% elsif settings.cart_action == 'redirect_cart' %}
-            <input type="hidden" name="return_to" value="{{ routes.crat_url }}" />
+            <input type="hidden" name="return_to" value="{{ routes.cart_url }}" />
           {% endif %}
 
           {% capture add_to_cart_label %}{% if collection_handles contains 'pre-order' %}{{ 'collections.general.pre_order' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}{% endcapture %}

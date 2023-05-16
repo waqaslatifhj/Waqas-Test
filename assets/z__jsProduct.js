@@ -1942,29 +1942,28 @@
     initGiftCard($section){
       if(this.gift_card_recipient_feature_active){
         
-        $section.on("change","input.recipient_trigger",function(){
-          const form_container = $section.find(".recipient_form__blocks").first();
+        $section.on("change","input[data-recipient-form-trigger]",function(){
+          const formContainer = $section.find(".purchase-details__recipient-form__blocks").first();
           if($(this).is(':checked')){
-           Shopify.theme.jsProduct.initFormFields(form_container);
-           form_container.slideDown();
+           Shopify.theme.jsProduct.initFormFields(formContainer);
+           formContainer.slideDown();
           }else {
-            form_container.slideUp();
-            Shopify.theme.jsProduct.resetFormFields(form_container);
-            //form_container.find('input[type!=submit], input[type!=reset]').val(''); //
+            formContainer.slideUp();
+            Shopify.theme.jsProduct.resetFormFields(formContainer);
           }
         });
       }
       
     },
     resetFormFields($form){
-      $form.find(".recipient_form_input").each(function(){
+      $form.find(".purchase-details__recipient-form__input").each(function(){
         $(this).attr("name","").val('');
       });
     },
     initFormFields($form){
-      $form.find(".recipient_form_input").each(function(){
+      $form.find(".purchase-details__recipient-form__input").each(function(){
         $(this).attr("name",$(this).attr("data-name"));
-        ($(this).hasClass("radio_fields_recipient") && $(this).val() != 'on') ? $(this).val('on') : null;
+        ($(this).hasClass("purchase-details__recipient-form__radio-field") && $(this).val() != 'on') ? $(this).val('on') : null;
       });
     },
     relatedProducts($section) {
