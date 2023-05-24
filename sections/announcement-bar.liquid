@@ -1,5 +1,5 @@
 {% comment %}
-** Announcement bar - static **
+  ** Announcement bar - static **
 {% endcomment %}
 
 {% assign id = section.id %}
@@ -59,7 +59,7 @@
 
 {% comment %} HTML markup {% endcomment %}
 {% capture announcement %}
-<div class="announcement-bar__container {{ css_class }}">
+<div class="announcement-bar__container  {{ css_class }}">
   <div class="announcement-bar is-{{ size }}"
         id="announcement-bar">
     <div class="section
@@ -127,7 +127,6 @@
 
 {% comment %}Schema{% endcomment %}
 {% schema %}
-
 {
   "name": "Announcement",
   "class": "announcement-container jsAnnouncementBar",
@@ -335,5 +334,4 @@
     }
   ]
 }
-
 {% endschema %}
