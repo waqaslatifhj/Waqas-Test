@@ -35,6 +35,11 @@
   assign section_bg = section.settings.section_bg
   assign animation = section.settings.animation | default: 'none'
 -%}
+{% comment %}Height{% endcomment %}
+{%- liquid
+  assign desktop_height = section.settings.desktop_height
+  assign mobile_height = section.settings.mobile_height
+-%}
 {% comment %}Advanced{% endcomment %}
 {%- liquid
   assign css_class = section.settings.css_class
@@ -61,6 +66,14 @@
     margin-top: {{ margin_top }}px;
     margin-bottom: {{ margin_bottom }}px;
   }
+  @media screen and (min-width:799px){
+    {% if desktop_height > 0 %}
+      #shopify-section-{{ id }} .image-element__wrap img{
+        max-height: {{ desktop_height }}px;
+        object-fit: cover;
+      }
+    {% endif %}
+  }
   @media screen and (max-width:798px){
     #shopify-section-{{ id }} {
       padding-top: {{ padding_top_m }}px;
@@ -70,6 +83,12 @@
       margin-top: {{ margin_top_m }}px;
       margin-bottom: {{ margin_bottom_m }}px;
     }
+    {% if mobile_height > 0 %}
+      #shopify-section-{{ id }} .image-element__wrap img{
+        max-height: {{ mobile_height }}px;
+        object-fit: cover;
+      }
+    {% endif %}
   }
   {% render 'css-loop',
           css: section_css,
@@ -87,18 +106,15 @@
       echo 'cart.general.title' | t
     endcapture
 
-
   elsif template.name == 'search'
     capture heading
       echo 'general.search.title' | t
     endcapture
 
-
   elsif template.name == '404'
     capture heading
-      echo'general.404.title' | t
+      echo 'general.404.title' | t
     endcapture
-
 
   elsif template.name == 'blog'
     assign heading = blog.title
@@ -113,9 +129,8 @@
     if blog.metafields.banner.mobile_image != blank
       assign mobile_image = blog.metafields.banner.mobile_image
     elsif mobile_image == blank
-        assign mobile_image = image
+      assign mobile_image = image
     endif
-
 
   elsif template.name == 'article'
     assign heading = article.title
@@ -135,9 +150,8 @@
     if article.metafields.banner.mobile_image != blank
       assign mobile_image = article.metafields.banner.mobile_image
     elsif mobile_image == blank
-        assign mobile_image = image
+      assign mobile_image = image
     endif
-
 
   elsif template.name == 'collection'
     assign heading = collection.title
@@ -160,7 +174,6 @@
       assign mobile_image = image
     endif
 
-
   else
     assign heading = page.title
   endif
@@ -173,47 +186,40 @@
     {{ css_class }}
     is-width-{{ width }}
   "
-  {% if animation != "none" %}
+  {% if animation != 'none' %}
     data-scroll-class="{{ animation }}"
   {% endif %}
 >
-  <div class="
+  <div
+    class="
       container
       {% if width == 'wide' %}
         equal-columns--outside-trim
       {% endif %}
-    ">
-    <div class="
+    "
+  >
+    <div
+      class="
         banner__wrapper
         one-whole
         column
         dark-overlay-{{ image_darken }}
         is-{{ banner_height }}
-      ">
+      "
+    >
       {% if mobile_image != blank %}
         {%- assign hide_mobile = 'is-hidden-mobile-only' -%}
       {% endif %}
 
       {% if image != blank %}
-        {%
-          render 'image-element',
-          image: image,
-          alt: image.alt,
-          stretch_width: true,
-          additional_classes: hide_mobile
-        %}
+        {% render 'image-element', image: image, alt: image.alt, stretch_width: true, additional_classes: hide_mobile %}
       {% else %}
         {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
       {% endif %}
 
       {% if mobile_image != blank %}
         <div class="is-hidden-desktop-only">
-          {%
-            render 'image-element',
-            image: mobile_image,
-            alt: mobile_image.alt,
-            stretch_width: true
-          %}
+          {% render 'image-element', image: mobile_image, alt: mobile_image.alt, stretch_width: true %}
         </div>
       {% endif %}
 
@@ -233,15 +239,7 @@
 {
   "name": "Banner",
   "class": "banner overlaid-header-option",
-  "templates": [
-    "page",
-    "collection",
-    "blog",
-    "article",
-    "cart",
-    "404",
-    "search"
-  ],
+  "templates": ["page", "collection", "blog", "article", "cart", "404", "search"],
   "settings": [
     {
       "type": "header",
@@ -264,6 +262,20 @@
       "id": "image_darken",
       "label": "Darken banner image",
       "default": true
+    },
+    {
+      "type": "number",
+      "id": "desktop_height",
+      "label": "Desktop image max height",
+      "default": 0,
+      "info": "Set value to 0 to disable this option"
+    },
+    {
+      "type": "number",
+      "id": "mobile_height",
+      "label": "Mobile image max height",
+      "default": 0,
+      "info": "Set value to 0 to disable this option"
     },
     {
       "type": "header",

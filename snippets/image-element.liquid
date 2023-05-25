@@ -94,9 +94,7 @@
     <img
       alt="{{ alt | escape }}"
       src="{{ image | img_url: '2000x' }}"
-      {% if inline_style %}
-        style="{{ inline_style }} {{ focal_point }}"
-      {% endif %}
+      style="{% if inline_style %} {{ inline_style }} {% endif %} {{ focal_point }}"
       {% if additional_classes %}
         class="{{ additional_classes }}"
       {% endif %}
