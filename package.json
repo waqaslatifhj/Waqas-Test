@@ -4,7 +4,7 @@
   "scripts": {
     "generate": "npx c2 generate",
     "shopify": "shopify",
-    "dev": "shopify theme dev",
+    "dev": "shopify theme dev --store=theme-changes.myshopify.com --theme-editor-sync",
     "list": "shopify theme list"
   },
   "keywords": [],

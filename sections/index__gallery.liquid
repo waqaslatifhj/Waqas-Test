@@ -36,6 +36,11 @@
   assign section_bg = section.settings.section_bg
   assign animation = section.settings.animation | default: 'none'
 -%}
+{% comment %}Height{% endcomment %}
+{%- liquid
+  assign desktop_height = section.settings.desktop_height
+  assign mobile_height = section.settings.mobile_height
+-%}
 {% comment %} Advanced {% endcomment %}
 {%- liquid
   assign css_class = section.settings.css_class
@@ -70,6 +75,14 @@
       width: 100%;
     {% endif %}
   }
+  @media screen and (min-width:799px){
+    {% if desktop_height > 0 %}
+      #shopify-section-{{ id }} .image-element__wrap img{
+        max-height: {{ desktop_height }}px;
+        object-fit: cover;
+      }
+    {% endif %}
+  }
   @media screen and (max-width:798px){
     #shopify-section-{{ id }} {
       padding-top: {{ padding_top_m }}px;
@@ -79,6 +92,12 @@
       margin-top: {{ margin_top_m }}px;
       margin-bottom: {{ margin_bottom_m }}px;
     }
+    {% if mobile_height > 0 %}
+      #shopify-section-{{ id }} .image-element__wrap img{
+        max-height: {{ mobile_height }}px;
+        object-fit: cover;
+      }
+    {% endif %}
   }
 
   {% render 'css-loop',
@@ -104,16 +123,18 @@
       equal-columns--outside-trim
     {% endif %}
   "
-  {% if animation != "none" %}
+  {% if animation != 'none' %}
     data-scroll-class="{{ animation }}"
   {% endif %}
 >
-  <div class="
+  <div
+    class="
       is-justify-center gallery__wrapper gallery-type--{{ gallery_type }}
       {% if gallery_type != 'masonry' %}
       container
       {% endif %}
-    ">
+    "
+  >
     {% for block in section.blocks %}
       {% comment %} Content settings {% endcomment %}
       {%- liquid
@@ -150,26 +171,11 @@
       >
         <div class="gallery__item-wrap is-relative">
           {% if gallery_type == 'horizontal-masonry' %}
-            {%
-              render 'image-element',
-              image: image,
-              alt: image.alt,
-              back_to_basics: true
-            %}
+            {% render 'image-element', image: image, alt: image.alt, back_to_basics: true %}
           {% elsif gallery_type == 'masonry' %}
-            {%
-              render 'image-element',
-              image: image,
-              alt: image.alt
-            %}
+            {% render 'image-element', image: image, alt: image.alt %}
           {% else %}
-            {%
-              render 'image-element',
-              image: image,
-              alt: image.alt,
-              stretch_width:
-              crop_images
-            %}
+            {% render 'image-element', image: image, alt: image.alt, stretch_width: crop_images %}
           {% endif %}
 
           {% if enable_lightbox or link != blank %}
@@ -268,6 +274,24 @@
       "id": "enable_lightbox",
       "label": "Enable lightbox",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "number",
+      "id": "desktop_height",
+      "label": "Desktop image max height",
+      "default": 0,
+      "info": "Set value to 0 to disable this option"
+    },
+    {
+      "type": "number",
+      "id": "mobile_height",
+      "label": "Mobile image max height",
+      "default": 0,
+      "info": "Set value to 0 to disable this option"
     },
     {
       "type": "header",
