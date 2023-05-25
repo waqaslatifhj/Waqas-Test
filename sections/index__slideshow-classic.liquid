@@ -33,6 +33,16 @@
   assign section_bg = section.settings.section_bg
   assign animation = section.settings.animation | default: 'none'
 -%}
+
+{% comment %}Height{% endcomment %}
+{%- liquid
+  assign add_desktop_height = section.settings.add_desktop_height
+  assign desktop_height = section.settings.desktop_height
+
+  assign add_mobile_height = section.settings.add_mobile_height
+  assign mobile_height = section.settings.mobile_height
+-%}
+
 {% comment %}Advanced{% endcomment %}
 {%- liquid
   assign css_class = section.settings.css_class
@@ -56,6 +66,14 @@
         width: 50%;
     {% endif %}
   }
+  @media screen and (min-width:799px){
+    {% if add_desktop_height %}
+      #shopify-section-{{ id }} .image-element__wrap img{
+        max-height: {{ desktop_height }}px;
+        object-fit: cover;
+      }
+    {% endif %}
+  }
   @media screen and (max-width:798px){
     #shopify-section-{{ id }} {
         padding-top: {{ padding_top_m }}px;
@@ -65,6 +83,12 @@
         margin-top: {{ margin_top_m }}px;
         margin-bottom: {{ margin_bottom_m }}px;
     }
+    {% if add_mobile_height %}
+        #shopify-section-{{ id }} .image-element__wrap img{
+          max-height: {{ mobile_height }}px;
+          object-fit: cover;
+        }
+      {% endif %}
   }
 
   {%
@@ -87,7 +111,7 @@
       mobile-text--over-media
     {% endif %}
   "
-  {% if animation != "none" %}
+  {% if animation != 'none' %}
     data-scroll-class="{{ animation }}"
   {% endif %}
 >
@@ -104,12 +128,7 @@
     data-slideshow-classic
   >
     {% for block in blocks %}
-      {%
-        render 'image-with-text-overlay-block',
-        context : 'slideshow-classic',
-        object: block,
-        type: 'block'
-      %}
+      {% render 'image-with-text-overlay-block', context: 'slideshow-classic', object: block, type: 'block' %}
     {% endfor %}
   </div>
 </section>
@@ -160,6 +179,28 @@
       "step": 1,
       "default": 8,
       "unit": "sec"
+    },
+    {
+      "type": "checkbox",
+      "id": "add_desktop_height",
+      "label": "Add Desktop image max height"
+    },
+    {
+      "type": "number",
+      "id": "desktop_height",
+      "label": "Desktop image max height",
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "add_mobile_height",
+      "label": "Add Mobile image max height"
+    },
+    {
+      "type": "number",
+      "id": "mobile_height",
+      "label": "Mobile image max height",
+      "default": 400
     },
     {
       "type": "checkbox",
