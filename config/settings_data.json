@@ -1,6 +1,6 @@
 {
   "current": {
-    "show_announcement_bar": false,
+    "show_announcement_bar": true,
     "show_age_verification": false,
     "show_popup": false,
     "show_fixed_message": false,
@@ -187,21 +187,45 @@
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
+        "blocks": {
+          "a6c78f19-b70c-4be2-872c-a3ee5914bda9": {
+            "type": "text",
+            "settings": {
+              "icon_label": "tag",
+              "text": "<p>Draw attention to promos + sales!<\/p>",
+              "button_label": "",
+              "link": "",
+              "button_style": "button--secondary"
+            }
+          },
+          "6e76b122-4c19-4138-8dd2-3a823a5ca84a": {
+            "type": "text",
+            "settings": {
+              "icon_label": "phone",
+              "text": "<p>Provide contact info<\/p>",
+              "button_label": "",
+              "link": "",
+              "button_style": "button--primary"
+            }
+          }
+        },
+        "block_order": [
+          "a6c78f19-b70c-4be2-872c-a3ee5914bda9",
+          "6e76b122-4c19-4138-8dd2-3a823a5ca84a"
+        ],
         "settings": {
-          "icon_label": "",
-          "text": "<p>Free Shipping over 80$<\/p>",
+          "add_slider": true,
+          "slider_arrows": false,
+          "auto_slider": true,
           "text_preset": "is-text",
           "alignment": "center",
           "size": "large",
-          "button_label": "",
-          "link": "shopify:\/\/collections",
-          "button_style": "button--primary",
-          "background": "#000000",
-          "text_color": "#ffffff",
           "width": "wide",
           "homepage_only": true,
           "enable_sticky": true,
           "show_close_icon": true,
+          "background": "#000000",
+          "text_color": "#ffffff",
           "css_class": "",
           "custom_css": ""
         }
@@ -367,7 +391,8 @@
           },
           "mega-menu-1-3": {
             "type": "empty_column",
-            "settings": {}
+            "settings": {
+            }
           },
           "mega-menu-1-4": {
             "type": "image",
@@ -667,7 +692,8 @@
           },
           "mega-menu-2-3": {
             "type": "empty_column",
-            "settings": {}
+            "settings": {
+            }
           },
           "mega-menu-2-4": {
             "type": "image",
@@ -752,7 +778,8 @@
           },
           "mega-menu-3-3": {
             "type": "empty_column",
-            "settings": {}
+            "settings": {
+            }
           },
           "mega-menu-3-4": {
             "type": "image",
@@ -837,7 +864,8 @@
           },
           "mega-menu-4-3": {
             "type": "empty_column",
-            "settings": {}
+            "settings": {
+            }
           },
           "mega-menu-4-4": {
             "type": "image",
@@ -971,7 +999,8 @@
           },
           "header-vertical-2": {
             "type": "search",
-            "settings": {}
+            "settings": {
+            }
           },
           "header-vertical-3": {
             "type": "navigation",
@@ -985,7 +1014,8 @@
           },
           "header-vertical-4": {
             "type": "payment_icons",
-            "settings": {}
+            "settings": {
+            }
           },
           "header-vertical-5": {
             "type": "copyright",
@@ -1132,6 +1162,8 @@
         }
       }
     },
-    "content_for_index": []
+    "content_for_index": [
+
+    ]
   }
 }
