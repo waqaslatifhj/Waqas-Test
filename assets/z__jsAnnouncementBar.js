@@ -119,12 +119,6 @@ Shopify.theme.jsAnnouncementBar = {
   },
   createSlider: function ($sliderEl) {
 
-    const slideData = {
-      products_per_slide: this.products_per,
-      products_available: this.products_available,
-      products_limit: this.products_limit,
-    }
-
     const slider = $sliderEl.flickity({
       lazyLoad: 2,
       freeScroll: false,
