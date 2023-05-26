@@ -56,6 +56,14 @@ Shopify.theme.jsAnnouncementBar = {
         }
       });
     }
+
+    // Announcement Bar Slider
+    if(this.slider === true){
+      let $sliderEl = $section.find('[data-slider]');
+      this.createSlider($sliderEl);
+      $('.announcement-bar__shadow').height(this.$el.height());
+    }
+
   },
   addVerticalHeaderTopMargin: function() {
     // Add negative margin if header is vertical
@@ -109,11 +117,36 @@ Shopify.theme.jsAnnouncementBar = {
 
     return announcementHeight;
   },
+  createSlider: function ($sliderEl) {
+
+    const slider = $sliderEl.flickity({
+      lazyLoad: 2,
+      freeScroll: false,
+      imagesLoaded: true,
+      draggable: true,
+      autoPlay: this.auto_slider,
+      cellAlign: 'center',
+      wrapAround: true,
+      pageDots: false,
+      contain: true,
+      prevNextButtons: this.slider_arrows,
+      initialIndex: 0,
+      arrowShape: arrowShape
+    });
+    slider.on('settle.flickity', function () {
+      slider.flickity('resize');
+    });
+
+  },
   unload: function($section) {
+
+    let $slider = $section.find('.flickity-enabled');
+    $slider.flickity('destroy');
 
     // Clear event listeners in theme editor
     $('#announcement-bar').off();
     $('#announcement-bar').unstick();
+    
   }
 }
 

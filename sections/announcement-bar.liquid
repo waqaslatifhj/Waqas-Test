@@ -3,7 +3,6 @@
 {% endcomment %}
 
 {% assign id = section.id %}
-{% assign icon = section.settings.icon_label | downcase %}
 {% assign size = section.settings.size %}
 {% assign text_preset = section.settings.text_preset %}
 {% assign text_color = section.settings.text_color %}
@@ -58,48 +57,59 @@
 {% endstyle %}
 
 {% comment %} HTML markup {% endcomment %}
-{% capture announcement %}
-<div class="announcement-bar__container  {{ css_class }}">
-  <div class="announcement-bar is-{{ size }}"
-        id="announcement-bar">
-    <div class="section
-                is-width-{{ width }}">
-      <div class="message-header">
-        <div class="announcement-bar__content is-justify-{{ section.settings.alignment }} show-close-icon-{{ show_close_icon }}">
-          {% if section.settings.icon_label != blank %}
-            <span class="announcement-bar__icon
-                        is-{{ size }}
-                       ">
-              {% render 'icon', name: icon %}
-            </span>
+{% if section.blocks.size > 0 %}
+  {% capture announcement %}
+  <div class="announcement-bar__container  {{ css_class }}">
+    <div class="announcement-bar is-{{ size }}"
+          id="announcement-bar">
+      <div class="section
+                  is-width-{{ width }}">
+        <div class="message-header">
+          {% if section.settings.add_slider %}
+            <div class="announcement-bar__slider" data-slider>
           {% endif %}
-
-          <div class="announcement-bar__text text-align-{{ section.settings.alignment }}">
-            <div class="{{ text_preset }}">{{ section.settings.text }}</div>
-            <p class="buttons">
-              {% if section.settings.button_label != blank %}
-                {% render 'button',
-                        label: section.settings.button_label,
-                        href: section.settings.link,
-                        type: "link",
-                        style: section.settings.button_style
-                %}
+          {% for block in section.blocks %}
+            <div class="announcement-bar__content is-justify-{{ section.settings.alignment }} show-close-icon-{{ show_close_icon }}">
+              {% if block.settings.icon_label != blank %}
+                {% assign icon = block.settings.icon_label | downcase %}
+                <span class="announcement-bar__icon
+                            is-{{ size }}
+                          ">
+                  {% render 'icon', name: icon %}
+                </span>
               {% endif %}
-            </p>
-          </div>
+
+              <div class="announcement-bar__text text-align-{{ section.settings.alignment }}">
+                <div class="{{ text_preset }}">{{ block.settings.text }}</div>
+                {% if block.settings.button_label != blank %}
+                  <p class="buttons">
+                      {% render 'button',
+                              label: block.settings.button_label,
+                              href: block.settings.link,
+                              type: "link",
+                              style: block.settings.button_style
+                      %}
+                  </p>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+          {% if section.settings.add_slider%}
+            </div>
+          {% endif %}
+          {% if show_close_icon %}
+            <button class="close announcement-bar__close js-close-announcement" aria-label="close">
+              {% render 'icon', name: 'x' %}
+            </button>
+          {% endif %}
         </div>
-        {% if show_close_icon %}
-          <button class="close announcement-bar__close js-close-announcement" aria-label="close">
-            {% render 'icon', name: 'x' %}
-          </button>
-        {% endif %}
       </div>
     </div>
-  </div>
 
-  <div class="announcement-bar__shadow" id="announcement-bar__shadow" aria-visible="false"></div>
-</div>
-{% endcapture %}
+    <div class="announcement-bar__shadow" id="announcement-bar__shadow" aria-visible="false"></div>
+  </div>
+  {% endcapture %}
+{% endif %}
 
 {% if section.settings.homepage_only %}
   {% if template.name == 'index' %}
@@ -120,7 +130,10 @@
     "enable_sticky": {{ section.settings.enable_sticky | json }},
     "show_close_icon": {{ section.settings.show_close_icon | json }},
     "alignment": {{ section.settings.alignment | json }},
-    "width": {{ section.settings.width | json }}
+    "width": {{ section.settings.width | json }},
+    "slider": {{ section.settings.add_slider | json }},
+    "slider_arrows": {{ section.settings.slider_arrows | json }},
+    "auto_slider": {{ section.settings.auto_slider | json }}
   }
 </script>
 <script src="{{ 'z__jsAnnouncementBar.js' | asset_url }}" defer></script>
@@ -130,24 +143,27 @@
 {
   "name": "Announcement",
   "class": "announcement-container jsAnnouncementBar",
+  "max_blocks": 6,
   "settings": [
     {
+      "type": "checkbox",
+      "id": "add_slider",
+      "label": "Add Slider",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_arrows",
+      "label": "Show Slider Arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_slider",
+      "label": "Auto Slider"
+    },
+    {
       "type": "header",
-      "content": "Text"
-    },
-    {
-      "type": "text",
-      "id": "icon_label",
-      "label": "Icon",
-      "placeholder": "Enter icon name",
-      "info": "[Icon list](https://help.outofthesandbox.com/hc/en-us/articles/360021570294)",
-      "default": "tag"
-    },
-    {
-      "type": "richtext",
-      "id": "text",
-      "label": "Text",
-      "default": "<p>Draw attention to promos + sales!</p>"
+      "content": "Text Block"
     },
     {
       "type": "select",
@@ -227,56 +243,6 @@
     },
     {
       "type": "header",
-      "content": "Button"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Label"
-    },
-    {
-      "type": "url",
-      "id": "link",
-      "label": "Link"
-    },
-    {
-      "type": "select",
-      "id": "button_style",
-      "label": "Style",
-      "options": [
-        {
-          "value": "button--primary",
-          "label": "Primary"
-        },
-        {
-          "value": "button--secondary",
-          "label": "Secondary"
-        },
-        {
-          "value": "button--link-style",
-          "label": "Link style"
-        }
-      ],
-      "default": "button--primary"
-    },
-    {
-      "type": "header",
-      "content": "Colors"
-    },
-    {
-      "type": "color",
-      "id": "background",
-      "label": "Background",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "header",
       "content": "Layout"
     },
     {
@@ -319,6 +285,22 @@
     },
     {
       "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
       "content": "Advanced",
       "info": "[Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022329373)"
     },
@@ -332,6 +314,73 @@
       "id": "custom_css",
       "label": "Custom CSS"
     }
-  ]
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Text"
+        },
+        {
+          "type": "text",
+          "id": "icon_label",
+          "label": "Icon",
+          "placeholder": "Enter icon name",
+          "info": "[Icon list](https://help.outofthesandbox.com/hc/en-us/articles/360021570294)",
+          "default": "tag"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Draw attention to promos + sales!</p>"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Style",
+          "options": [
+            {
+              "value": "button--primary",
+              "label": "Primary"
+            },
+            {
+              "value": "button--secondary",
+              "label": "Secondary"
+            },
+            {
+              "value": "button--link-style",
+              "label": "Link style"
+            }
+          ],
+          "default": "button--primary"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "text"
+      }
+    ]
+  }
 }
 {% endschema %}
