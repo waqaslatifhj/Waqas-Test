@@ -1,6 +1,6 @@
 <section class="quickshop-container" data-html="content">
 
-  {% style %}
+{% style %}
     {% render 'css-loop',
             css: section.settings.custom_css,
             id: section.id
@@ -9,10 +9,18 @@
 
   {% liquid
     assign selected_variant = product.selected_variant
-
+    assign gift_card_recipient_feature_active = false
     if product.variants.size == 1 or settings.select_first_available_variant
       assign selected_variant = product.selected_or_first_available_variant
     endif
+
+    for block in section.blocks
+      if block.type == 'form'
+        if block.settings.enable_giftCard_recipient and product.gift_card?
+          assign gift_card_recipient_feature_active = true
+        endif
+      endif
+    endfor
   %}
 
   <div class="product-{{ product.id }} {{ section.settings.css_class }}">
@@ -37,40 +45,42 @@
       tag_style: settings.tag_style,
       thumbnail_position: section.settings.thumbnail_position,
       video_looping: section.settings.video_looping,
+      gift_card_recipient_feature_active:gift_card_recipient_feature_active
     %}
   </div>
+
+
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'price' -%}
+      {%- assign display_savings = block.settings.display_savings | json -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {% comment %} JavaScript {% endcomment %}
+  <script
+    type="application/json"
+    data-section-id="quickshop"
+    data-section-data
+  >
+    {
+      "display_savings": {{ display_savings }},
+      "gallery_arrows": {{ section.settings.gallery_arrows | json }},
+      "thumbnail_arrows": {{ section.settings.gallery_arrows | json }},
+      "enable_zoom": {{ section.settings.enable_zoom | json }},
+      "enable_product_lightbox": {{ section.settings.enable_product_lightbox | json }},
+      "enable_thumbnail_slider": {{ section.settings.enable_thumbnail_slider | json }},
+      "slideshow_speed": {{ section.settings.slideshow_speed | json }},
+      "slideshow_transition": {{ section.settings.slideshow_transition | json }},
+      "thumbnails_enabled": {{ section.settings.display_thumbnails | json }},
+      "thumbnail_position": {{ section.settings.thumbnail_position | json }},
+      "product_media_amount": {{ product.media.size }},
+      "template": "classic",
+      "gift_card_recipient_feature_active": {{ gift_card_recipient_feature_active | json }}
+    }
+  </script>
+
+  <script src="{{ 'z__jsProduct.js' | asset_url }}"></script>
 </section>
-
-{%- for block in section.blocks -%}
-  {%- if block.type == 'price' -%}
-    {%- assign display_savings = block.settings.display_savings | json -%}
-  {%- endif -%}
-{%- endfor -%}
-
-{% comment %} JavaScript {% endcomment %}
-<script
-  type="application/json"
-  data-section-id="{{ section.id }}"
-  data-section-data
->
-  {
-    "display_savings": {{ display_savings }},
-    "gallery_arrows": {{ section.settings.gallery_arrows | json }},
-    "thumbnail_arrows": {{ section.settings.gallery_arrows | json }},
-    "enable_zoom": {{ section.settings.enable_zoom | json }},
-    "enable_product_lightbox": {{ section.settings.enable_product_lightbox | json }},
-    "enable_thumbnail_slider": {{ section.settings.enable_thumbnail_slider | json }},
-    "slideshow_speed": {{ section.settings.slideshow_speed | json }},
-    "slideshow_transition": {{ section.settings.slideshow_transition | json }},
-    "thumbnails_enabled": {{ section.settings.display_thumbnails | json }},
-    "thumbnail_position": {{ section.settings.thumbnail_position | json }},
-    "product_media_amount": {{ product.media.size }},
-    "template": "classic"
-  }
-</script>
-
-<script src="{{ 'z__jsProduct.js' | asset_url }}"></script>
-
 {% comment %} Shopify-XR {% endcomment %}
 {% if product.media %}
   <script>
@@ -227,7 +237,7 @@
     {
       "type": "title",
       "name": "Title",
-      "settings":[
+      "settings": [
         {
           "type": "select",
           "id": "preset",
@@ -275,7 +285,7 @@
       "type": "vendor",
       "name": "Vendor",
       "limit": 1,
-      "settings":[
+      "settings": [
         {
           "type": "select",
           "id": "preset",
@@ -375,7 +385,7 @@
       "type": "sku",
       "name": "SKU",
       "limit": 1,
-      "settings":[
+      "settings": [
         {
           "type": "select",
           "id": "preset",
@@ -540,6 +550,13 @@
           "default": true
         },
         {
+          "type": "checkbox",
+          "id": "enable_giftCard_recipient",
+          "label": "Show recipient information form for gift card products",
+          "info": "Gift card products can optionally be sent direct to a recipient along with a personal message.[Learn more](https://help.shopify.com/en/manual/online-store/themes/customizing-themes/add-gift-card-recipient-fields)",
+          "default": false
+        },
+        {
           "type": "paragraph",
           "content": "Customize additional form features for the product in Theme settings > Product form."
         }
@@ -590,10 +607,7 @@
     }
   ],
   "default": {
-    "settings": {
-
-    }
+    "settings": {}
   }
 }
-
 {% endschema %}
