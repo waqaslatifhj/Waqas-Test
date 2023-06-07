@@ -34,6 +34,7 @@
       size="2"
       name="quantity"
       value="{{ value }}"
+      data-quantity-value="{{value}}"
       {% if settings.limit_quantity and variant.inventory_management != blank and variant.inventory_policy == 'deny' %}
         max="{{ variant.inventory_quantity }}" data-max-inventory-management
       {% endif %}
