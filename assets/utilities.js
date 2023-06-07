@@ -785,6 +785,13 @@ Shopify.theme.quantityBox = {
       error: function (XMLHttpRequest, textStatus) {
         var response = eval('(' + XMLHttpRequest.responseText + ')');
         response = response.description;
+        if($("[data-line-item='"+lineID+"'] .quantity-warning").length > 0){
+          $("[data-line-item='"+lineID+"'] .quantity-warning").html(XMLHttpRequest.responseJSON.message);
+          $("[data-line-item='"+lineID+"']  input.quantity-input").val(parseInt(quantity-1));
+          setTimeout(function(){
+            $(".cart__quantity-warning.quantity-warning, .ajax-cart__quantity-warning.quantity-warning").html("");
+          }, 1600);
+        }
       }
     });
   },
