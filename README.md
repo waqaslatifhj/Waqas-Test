@@ -41,7 +41,7 @@
 
 2): Run `shopify theme dev --store="Store myshopify.com link here"` in CMD/Terminal to create a new preview theme and preview it locally
 
-**NOTE** The store flag here is needed for first time so shopify CLI knows where store to work with. You can check store name with `shopify theme info` command. After setting up a new project this command can also be used as `shopify theme dev`(without store flag) or `npm run dev`. The second one is defined under scripts in package.json file and more commands can be added here as well including commands to install private packages(libraries) to run them directly with  npm run prefix in terminal. Visit this [guide](https://github.com/C2Digital1/c2-theme/blob/main/Shopify-CLI.md) for more info on package.json scripts and how to use them for private packages.
+**NOTE** The store flag here is needed for first time so shopify CLI knows what store to work with. You can check store name with `shopify theme info` command. After setting up a new project this command can also be used as `shopify theme dev`(without store flag) or `npm run dev`. The second one is defined under scripts in package.json file and more commands can be added here as well including commands to install private packages(libraries) to run them directly with  npm run prefix in terminal. Visit this [guide](https://github.com/C2Digital1/c2-theme/blob/main/Shopify-CLI.md) for more info on package.json scripts and how to use them for private packages.
 
 ## Push changes
 
