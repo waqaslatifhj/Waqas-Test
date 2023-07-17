@@ -190,6 +190,7 @@
         "blocks": {
           "a6c78f19-b70c-4be2-872c-a3ee5914bda9": {
             "type": "text",
+            "disabled": true,
             "settings": {
               "icon_label": "tag",
               "text": "<p>Draw attention to promos + sales!<\/p>",
@@ -200,6 +201,7 @@
           },
           "6e76b122-4c19-4138-8dd2-3a823a5ca84a": {
             "type": "text",
+            "disabled": true,
             "settings": {
               "icon_label": "phone",
               "text": "<p>Provide contact info<\/p>",
@@ -269,6 +271,7 @@
         "blocks": {
           "header__top-bar-1": {
             "type": "social_media",
+            "disabled": true,
             "settings": {
               "hide_on_mobile": true,
               "width": "4",
@@ -278,6 +281,7 @@
           },
           "44d41cb8-2c32-4d50-b9db-8aa57135a153": {
             "type": "text",
+            "disabled": true,
             "settings": {
               "hide_on_mobile": false,
               "width": "8",
@@ -289,6 +293,7 @@
           },
           "3339279c-9399-4c5b-ab0e-e4bda2b207e0": {
             "type": "header_icons",
+            "disabled": true,
             "settings": {
               "hide_on_mobile": true,
               "width": "4",
